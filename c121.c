@@ -1,26 +1,26 @@
 #include <stdio.h>
-int fib[5001][1200];   // ¨C­Ó Fibonacci ¦s¨C¤@¦ì
-int len[5001];         // ¨C­Ó Fibonacci ªº¦ì¼Æ
+int fib[5001][1200];   // æ¯å€‹ Fibonacci å­˜æ¯ä¸€ä½
+int len[5001];         // æ¯å€‹ Fibonacci çš„ä½æ•¸
 int main()
 {
-    int n;
+    int i,j,n;
     
     fib[0][0] = 0;
     len[0] = 1;
     fib[1][0] = 1;
     len[1] = 1;
-    /* ¹w¥ıºâ */
-    for(int i = 2; i <= 5000; i++)
+    /* é å…ˆç®— */
+    for(i = 2; i <= 5000; i++)
     {
         int carry = 0;
-        /* ¥ı³]ªø«× */
+        /* å…ˆè¨­é•·åº¦ */
         if(len[i-1] > len[i-2]){
 			len[i] = len[i-1];
 		}
         else{
         	len[i] = len[i-2];
 		}
-        for(int j = 0; j < len[i]; j++)
+        for(j = 0; j < len[i]; j++)
         {
             int sum = fib[i-1][j] + fib[i-2][j] + carry;
             fib[i][j] = sum % 10;
@@ -36,9 +36,10 @@ int main()
     while(scanf("%d", &n) != EOF)
     {
         printf("The Fibonacci number for %d is ", n);
-        for(int i = len[n]-1; i >= 0; i--)
+        for(i = len[n]-1; i >= 0; i--)
             printf("%d", fib[n][i]);
         printf("\n");
     }
     return 0;
 }
+
