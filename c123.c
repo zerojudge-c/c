@@ -2,64 +2,65 @@
 
 int main(void)
 {
-    int n;   // ���[�ƶq N
+    int n;   // 車廂數量 N
 
-    // �@��Ū N�A���� N=0 ����
+    // 一直讀 N，直到 N=0 結束
     while(scanf("%d",&n)==1 && n!=0)
     {
-        // �@�� N �i�঳�h�ձƦC����
-        while(1)
+        // 一個 N 可能有多組排列測試
+        for(;;)
         {
-            int a[1005];   // �x�s�ؼбƦC
+            int a[1005];   // 儲存目標排列
 
-            // ��Ū�ƦC�Ĥ@�Ӽ�
+            // 先讀排列第一個數
             scanf("%d",&a[0]);
 
-            // �p�G�Ĥ@�ӼƬO 0 �� �N���o�� N ����
+            // 如果第一個數是 0 → 代表這組 N 結束
             if(a[0]==0) break;
 
-            // Ū�ѤU�ƦC
+            // 讀剩下排列
             for(int i=1;i<n;i++)
                 scanf("%d",&a[i]);
 
-            // ===== stack ������ =====
+            // ===== stack 模擬區 =====
 
-            int temp[1005];   // stack�]�������u�^
-            int top=-1;       // stack ���ݡ]-1 �N���š^
-            int next=1;       // �U�@�ӭn�i�������]����� 1~N�^
-            int f=1;          // �O�_�i��]1=Yes, 0=No�^
+            int temp[1005];   // stack（車站側線）
+            int top=-1;       // stack 頂端（-1 代表空）
+            int next=1;       // 下一個要進站的車（原火車 1~N）
+            int f=1;          // 是否可行（1=Yes, 0=No）
 
-            // �̧ǳB�z�C�ӥؼШ��[
+            // 依序處理每個目標車廂
             for(int i=0;i<n;i++)
             {
-                // �p�G stack top ���O�ڭn��
-                // �B�٦����i�H�i��
-                // �N�@�� push
+                // 如果 stack top 不是我要的
+                // 且還有車可以進站
+                // 就一直 push
                 while((top==-1 || temp[top]!=a[i]) && next<=n)
                 {
-                    temp[++top]=next;   // push�G���i��
-                    next++;             // �U�@�x��
+                    temp[++top]=next;   // push：車進站
+                    next++;             // 下一台車
                 }
 
-                // �p�G�{�b stack top �N�O�ڭn��
+                // 如果現在 stack top 就是我要的
                 if(temp[top]==a[i])
-                    top--;   // pop�G���X��
+                    top--;   // pop：車出站
 
                 else{
-                    // push ���]�S���ڭn��
-                    // �N���û�������
+                    // push 完也沒有我要的
+                    // 代表永遠拿不到
                     f=0;
                     break;
                 }
             }
 
-            // �ھڵ��G��X
-            if(f) printf("Yes\n");
+            // 根據結果輸出
+            if(f!=0) printf("Yes\n");
             else printf("No\n");
         }
 
-        // �C�� N ���ի�n�Ť@��
+        // 每組 N 測試後要空一行
         printf("\n");
     }
     return 0;
 }
+
